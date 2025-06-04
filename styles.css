@@ -22,6 +22,10 @@ body {
     border: 20px solid gray;
     border-radius: 10px;
     flex: 1;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 #buttons {
@@ -42,4 +46,11 @@ body {
     flex: 0 0 22%;
     border-radius: 10px;
     text-align: center;
+}
+
+#display>p {
+    font-size: 40px;
+    padding: 0;
+    margin: 0;
+    margin-right: 10px;
 }

@@ -1,3 +1,6 @@
+let buttonDiv = document.querySelector('#buttons');
+let display = document.querySelector('#display>p');
+
 function addButtons(parent) {
     const labels = 
     [   '%', 'CE', 'C', 'DEL',
@@ -12,7 +15,7 @@ function addButtons(parent) {
         button.textContent = element;
         button.classList.add('button');
         button.addEventListener('click', e => {
-            console.log(e.target.textContent)
+            display.textContent += e.target.textContent;
         })
 
         parent.appendChild(button);
@@ -56,7 +59,6 @@ function multiply(a, b) {
     return a * b;
 }
 
-let buttonDiv = document.querySelector('#buttons');
 addButtons(buttonDiv);
 
 
