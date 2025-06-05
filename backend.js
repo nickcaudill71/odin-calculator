@@ -10,16 +10,65 @@ function addButtons(parent) {
         '.', '0', '=', '+'
     ]
 
+    const operants = ['+', '-', '/', 'x']
+
     labels.forEach(element => {
         let button = document.createElement('button');
         button.textContent = element;
         button.classList.add('button');
         button.addEventListener('click', e => {
-            display.textContent += e.target.textContent;
+            const textContext = e.target.textContent;
+            if (!isNaN(parseInt(textContext))) {
+                addNumberToDisplay(textContext);
+            }
+            else if (operants.includes(textContext)) {
+                currentOperation.a = display.textContent;
+                currentOperation.operant = textContext;
+                display.textContent = ''
+            }
+            else if (textContext === '=') {
+                currentOperation.b = display.textContent;
+                if (isValidOperation) {
+                    const ans = operate(currentOperation);
+                    display.textContent = ans;
+                    setupNewOperation(ans);
+                }
+                else {
+                    display.textContent = 'Invalid Operation.. Please Clear'
+                }
+                
+            }
+            else if (textContext === 'C' || textContext === "CE") {
+                display.textContent = ''
+                clearCurrentOperation();
+            }
         })
 
         parent.appendChild(button);
     });
+}
+
+function addNumberToDisplay(number) {
+    display.textContent +=  number;
+}
+
+function isValidOperation() {
+    for (let key in currentOperation) {
+        if (currentOperation[key] === '') return false;
+    }
+
+    return true;
+}
+
+function clearCurrentOperation() {
+    for (let key in currentOperation) {
+        currentOperation[key] = '';
+    }
+}
+
+function setupNewOperation(value) {
+    clearCurrentOperation()
+    currentOperation.a = value;
 }
 
 function operate(operation) {
@@ -38,7 +87,7 @@ function operate(operation) {
             return subtract(a, b);
         case '/':
             return divide(a, b);
-        case '*':
+        case 'x':
             return multiply(a, b);
     }
 }
